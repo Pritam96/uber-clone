@@ -1,8 +1,13 @@
 import userModel from "../models/user.model.js";
 
-const createUser = async ({ firstName, lastName, email, password }) => {
+export const createUser = async ({ firstName, lastName, email, password }) => {
   if (!firstName || !email || !password) {
-    throw new Error("Please provide required fields");
+    throw new Error("Please provide the required fields");
+  }
+
+  const existingUser = await userModel.findOne({ email });
+  if (existingUser) {
+    throw new Error("User already exists with this email");
   }
 
   const user = await userModel.create({
@@ -17,4 +22,15 @@ const createUser = async ({ firstName, lastName, email, password }) => {
   return user;
 };
 
-export default createUser;
+export const authenticateUser = async ({ email, password }) => {
+  if (!email || !password) {
+    throw new Error("Please provide the required fields");
+  }
+
+  const user = await userModel.findOne({ email }).select("+password");
+  if (!user) {
+    throw new Error("Invalid email or password");
+  }
+
+  return user;
+};
