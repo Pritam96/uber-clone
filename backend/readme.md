@@ -195,3 +195,143 @@ This endpoint logs out the authenticated user by invalidating their authenticati
 
 - **Unauthorized Error:** If the authentication token is invalid or missing, a `401 Unauthorized` response will be returned.
 - **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response
+
+## Endpoint: `/captains/register`
+
+### Description
+
+This endpoint registers a new captain in the system. It validates input data and creates a new captain record in the database.
+
+### HTTP Method
+
+`POST`
+
+### Request Headers
+
+- `Content-Type: application/json`
+
+### Request Body
+
+| Field    | Type   | Description                                                   | Example                                                                      |
+| -------- | ------ | ------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| email    | string | The captain's email address. Must be in a valid email format. | `"captain@example.com"`                                                      |
+| fullName | object | Contains the captain's first and last names.                  | `{ "firstName": "John", "lastName": "Doe" }`                                 |
+| password | string | The captain's password. Must be at least 6 characters long.   | `"securePassword123"`                                                        |
+| vehicle  | object | Contains the vehicle's details.                               | `{ "color": "Red", "plate": "ABC123", "capacity": 4, "vehicleType": "car" }` |
+
+### Response
+
+#### Success Response
+
+- **Status Code:** `201 Created`
+- **Response Body:** A JSON object containing the authentication token and captain information.
+
+#### Error Responses
+
+- **400 Bad Request:** If the request body is invalid or missing required fields.
+- **500 Internal Server Error:** If an unexpected error occurs.
+
+### Example Request Body
+
+```json
+{
+  "email": "captain@example.com",
+  "fullName": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "password": "securePassword123",
+  "vehicle": {
+    "color": "Red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+### Example Success Response
+
+```json
+{
+  "token": "jwt-auth-token",
+  "captain": {
+    "id": "captain-id",
+    "fullName": {
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "email": "captain@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+## Endpoint: `/captains/login`
+
+### Description
+
+This endpoint authenticates a captain in the system. It validates the input data and checks the captain's credentials against the stored records.
+
+### HTTP Method
+
+`POST`
+
+### Request Headers
+
+- `Content-Type: application/json`
+
+### Request Body
+
+| Field    | Type   | Description                                                   | Example                 |
+| -------- | ------ | ------------------------------------------------------------- | ----------------------- |
+| email    | string | The captain's email address. Must be in a valid email format. | `"captain@example.com"` |
+| password | string | The captain's password. Must be at least 6 characters long.   | `"securePassword123"`   |
+
+### Response
+
+#### Success Response
+
+- **Status Code:** `201 Created`
+- **Response Body:** A JSON object containing the authentication token and captain information.
+
+#### Error Responses
+
+- **401 Unauthorized:** If the captain's credentials are invalid.
+- **500 Internal Server Error:** If an unexpected error occurs.
+
+### Example Request Body
+
+```json
+{
+  "email": "captain@example.com",
+  "password": "securePassword123"
+}
+```
+
+### Example Success Response
+
+```json
+{
+  "token": "jwt-auth-token",
+  "captain": {
+    "id": "captain-id",
+    "fullName": {
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "email": "captain@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```

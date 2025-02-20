@@ -5,11 +5,6 @@ export const createUser = async ({ firstName, lastName, email, password }) => {
     throw new Error("Please provide the required fields");
   }
 
-  const existingUser = await userModel.findOne({ email });
-  if (existingUser) {
-    throw new Error("User already exists with this email");
-  }
-
   const user = await userModel.create({
     fullName: {
       firstName,
