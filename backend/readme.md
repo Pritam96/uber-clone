@@ -60,49 +60,16 @@ The request body must be a JSON object containing the following fields:
 }
 ```
 
-### Error Responses
+#### Error Responses
 
-#### Validation Error
-
-- **Status Code:** `400 Bad Request`
-- **Description:** Validation errors in the request body.
-- **Response Body:** A JSON object with an `errors` array detailing validation issues.
-
-##### Example Error Response (400 Bad Request)
-
-```json
-{
-  "errors": [
-    {
-      "msg": "Invalid email format",
-      "param": "email",
-      "location": "body"
-    }
-  ]
-}
-```
-
-#### Server Error
-
-- **Status Code:** `500 Internal Server Error`
-- **Description:** An unexpected error occurred on the server.
-- **Response Body:** A JSON object with a `message` field.
-
-##### Example Error Response (500 Internal Server Error)
-
-```json
-{
-  "message": "Internal server error"
-}
-```
-
----
+- **Validation Error:** If the request body contains invalid data, a `400 Bad Request` response will be returned.
+- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response will be returned.
 
 ## Endpoint: `/users/login`
 
 ### Description
 
-This endpoint is used to authenticate a user in the system. It validates the input data and checks the user's credentials against the stored records.
+This endpoint authenticates a user in the system. It validates the input data and checks the user's credentials against the stored records.
 
 ### HTTP Method
 
@@ -116,7 +83,7 @@ This endpoint is used to authenticate a user in the system. It validates the inp
 
 The request body must be a JSON object containing the following fields:
 
-- `email` (string) - The user's email address. Must be a valid email format.
+- `email` (string) - The user's email address. Must be in a valid email format.
 - `password` (string) - The user's password. Must be at least 6 characters long.
 
 #### Example Request Body
@@ -132,7 +99,7 @@ The request body must be a JSON object containing the following fields:
 
 #### Success Response
 
-- **Status Code:** `200 OK`
+- **Status Code:** `201 Created`
 - **Response Body:** A JSON object containing the authentication token and user information.
 
 ##### Example Success Response
@@ -151,52 +118,80 @@ The request body must be a JSON object containing the following fields:
 }
 ```
 
-### Error Responses
+#### Error Responses
 
-#### Validation Error
+- **Unauthorized Error:** If the email or password is invalid, a `401 Unauthorized` response will be returned.
+- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response will be returned.
 
-- **Status Code:** `400 Bad Request`
-- **Description:** Validation errors in the request body.
-- **Response Body:** A JSON object with an `errors` array detailing validation issues.
+## Endpoint: `/users/profile`
 
-##### Example Error Response (400 Bad Request)
+### Description
 
-```json
-{
-  "errors": [
-    {
-      "msg": "Invalid email format",
-      "param": "email",
-      "location": "body"
-    }
-  ]
-}
-```
+This endpoint retrieves the authenticated user's profile information.
 
-#### Unauthorized Error
+### HTTP Method
 
-- **Status Code:** `401 Unauthorized`
-- **Description:** Invalid email or password.
-- **Response Body:** A JSON object with a `message` field.
+`GET`
 
-##### Example Error Response (401 Unauthorized)
+### Request Headers
+
+- `Authorization: Bearer <token>` - The authentication token obtained during login.
+
+### Response
+
+#### Success Response
+
+- **Status Code:** `200 OK`
+- **Response Body:** A JSON object containing the user's profile information.
+
+##### Example Success Response
 
 ```json
 {
-  "message": "Invalid email or password"
+  "id": "user-id",
+  "fullName": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "email": "user@example.com"
 }
 ```
 
-#### Server Error
+#### Error Responses
 
-- **Status Code:** `500 Internal Server Error`
-- **Description:** An unexpected error occurred on the server.
-- **Response Body:** A JSON object with a `message` field.
+- **Unauthorized Error:** If the authentication token is invalid or missing, a `401 Unauthorized` response will be returned.
+- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response will be returned.
 
-##### Example Error Response (500 Internal Server Error)
+## Endpoint: `/users/logout`
+
+### Description
+
+This endpoint logs out the authenticated user by invalidating their authentication token.
+
+### HTTP Method
+
+`GET`
+
+### Request Headers
+
+- `Authorization: Bearer <token>` - The authentication token obtained during login.
+
+### Response
+
+#### Success Response
+
+- **Status Code:** `200 OK`
+- **Response Body:** A JSON object containing a success message.
+
+##### Example Success Response
 
 ```json
 {
-  "message": "Internal server error"
+  "message": "Logged out"
 }
 ```
+
+#### Error Responses
+
+- **Unauthorized Error:** If the authentication token is invalid or missing, a `401 Unauthorized` response will be returned.
+- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response
