@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import { authenticateUser, createUser } from "../services/user.service.js";
+import { createUser } from "../services/user.service.js";
 import userModel from "../models/user.model.js";
 import blacklistTokenModel from "../models/blacklist.token.model.js";
 
@@ -53,12 +53,18 @@ export const loginUser = async (req, res, next) => {
 
     const { email, password } = req.body;
 
-    const user = await authenticateUser({ email, password });
-    if (!(await user.comparePassword(password))) {
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Please provide the required fields" });
+    }
+
+    const existingUser = await userModel.findOne({ email }).select("+password");
+    if (!existingUser || !(await existingUser.comparePassword(password))) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const token = user.generateAuthToken();
+    const token = existingUser.generateAuthToken();
 
     const options = {
       httpOnly: true,
@@ -73,9 +79,9 @@ export const loginUser = async (req, res, next) => {
       .json({
         token,
         user: {
-          id: user._id,
-          fullName: user.fullName,
-          email: user.email,
+          id: existingUser._id,
+          fullName: existingUser.fullName,
+          email: existingUser.email,
         },
       });
   } catch (error) {
@@ -94,5 +100,8 @@ export const logoutUser = async (req, res, next) => {
 
   await blacklistTokenModel.create({ token });
 
-  res.clearCookie("token").status(200).json({ message: "Logged out" });
+  res
+    .clearCookie("token")
+    .status(200)
+    .json({ message: "User logged out successfully" });
 };

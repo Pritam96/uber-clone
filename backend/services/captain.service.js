@@ -39,16 +39,3 @@ export const createCaptain = async ({
 
   return captain;
 };
-
-export const authenticateCaptain = async ({ email, password }) => {
-  if (!email || !password) {
-    throw new Error("Please provide the required fields");
-  }
-
-  const user = await captainModel.findOne({ email }).select("+password");
-  if (!user) {
-    throw new Error("Invalid email or password");
-  }
-
-  return user;
-};

@@ -187,7 +187,7 @@ This endpoint logs out the authenticated user by invalidating their authenticati
 
 ```json
 {
-  "message": "Logged out"
+  "message": "User logged out successfully"
 }
 ```
 
@@ -335,3 +335,82 @@ This endpoint authenticates a captain in the system. It validates the input data
   }
 }
 ```
+
+## Endpoint: `/captains/profile`
+
+### Description
+
+This endpoint retrieves the authenticated captain's profile information.
+
+### HTTP Method
+
+`GET`
+
+### Request Headers
+
+- `Authorization: Bearer <token>` - The authentication token obtained during login.
+
+### Response
+
+#### Success Response
+
+- **Status Code:** `200 OK`
+- **Response Body:** A JSON object containing the captain's profile information.
+
+##### Example Success Response
+
+```json
+{
+  "id": "captain-id",
+  "fullName": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "email": "captain@example.com",
+  "vehicle": {
+    "color": "Red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+#### Error Responses
+
+- **Unauthorized Error:** If the authentication token is invalid or missing, a `401 Unauthorized` response will be returned.
+- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response will be returned.
+
+## Endpoint: `/captains/logout`
+
+### Description
+
+This endpoint logs out the authenticated captain by invalidating their authentication token.
+
+### HTTP Method
+
+`POST`
+
+### Request Headers
+
+- `Authorization: Bearer <token>` - The authentication token obtained during login.
+
+### Response
+
+#### Success Response
+
+- **Status Code:** `200 OK`
+- **Response Body:** A JSON object containing a success message.
+
+##### Example Success Response
+
+```json
+{
+  "message": "Captain logged out successfully"
+}
+```
+
+#### Error Responses
+
+- **Unauthorized Error:** If the authentication token is invalid or missing, a `401 Unauthorized` response will be returned.
+- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response will be returned.
