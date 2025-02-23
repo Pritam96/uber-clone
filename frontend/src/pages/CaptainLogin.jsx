@@ -61,7 +61,7 @@ const CaptainLogin = () => {
 
             <p className="py-2 text-center">
               Want to be a Captain?{" "}
-              <Link to="/captain-signup" className="text-blue-600">
+              <Link to="/captain/signup" className="text-blue-600">
                 Register as a Captain
               </Link>
             </p>
@@ -69,7 +69,7 @@ const CaptainLogin = () => {
         </div>
         <div>
           <Link
-            to="/login"
+            to="/user/login"
             className="flex items-center justify-center w-full bg-[#d5622d] text-white font-semibold rounded px-4 py-3"
           >
             Sign in as User

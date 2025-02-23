@@ -168,7 +168,7 @@ const CaptainSignup = () => {
 
             <p className="py-2 text-center">
               Already registered?{" "}
-              <Link to="/captain-login" className="text-blue-600">
+              <Link to="/captain/login" className="text-blue-600">
                 Login Here
               </Link>
             </p>

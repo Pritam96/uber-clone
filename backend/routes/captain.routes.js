@@ -38,7 +38,7 @@ router.post(
 );
 
 router.post(
-  "/login",
+  "/user/login",
   [
     body("email").isEmail().withMessage("Invalid Email"),
     body("password").isLength({ min: 6 }).withMessage("Invalid Password"),

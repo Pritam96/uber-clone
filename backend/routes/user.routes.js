@@ -25,7 +25,7 @@ router.post(
 );
 
 router.post(
-  "/login",
+  "/user/login",
   [
     body("email").isEmail().withMessage("Invalid Email"),
     body("password").isLength({ min: 6 }).withMessage("Invalid Password"),
@@ -35,6 +35,6 @@ router.post(
 
 router.get("/profile", authUser, getUserProfile);
 
-router.post("/logout", logoutUser);
+router.post("/logout", authUser, logoutUser);
 
 export default router;

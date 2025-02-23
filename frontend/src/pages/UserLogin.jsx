@@ -1,19 +1,41 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import uberLogo from "../assets/uber-logo.png";
+import axios from "axios";
+import { useUserContext } from "../context/UserProvider";
+
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const UserLogin = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
+  const { setUser } = useUserContext();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    try {
+      const response = await axios.post(
+        `${baseURL}/users/user/login`,
+        formData
+      );
+
+      if (response.status === 201) {
+        setUser(response.data?.user);
+        localStorage.setItem("token", response.data?.token);
+        navigate("/home");
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
     // Clear forData after submit
     setFormData({
@@ -57,7 +79,7 @@ const UserLogin = () => {
 
             <p className="py-2 text-center">
               New Here?{" "}
-              <Link to="/signup" className="text-blue-600">
+              <Link to="/user/signup" className="text-blue-600">
                 Create new Account
               </Link>
             </p>
@@ -65,7 +87,7 @@ const UserLogin = () => {
         </div>
         <div>
           <Link
-            to="/captain-login"
+            to="/captain/login"
             className="flex items-center justify-center w-full bg-[#10b461] text-white font-semibold rounded px-4 py-3"
           >
             Sign in as Captain

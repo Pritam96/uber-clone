@@ -1,25 +1,19 @@
-import { Link } from "react-router-dom";
-import uberLogo from "../assets/uber-logo.png";
-import uberBackground from "../assets/uber-background.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    navigate("/user/logout");
+  };
   return (
-    <div>
-      <div
-        className="bg-cover bg-bottom h-screen w-full flex flex-col justify-between pt-7"
-        style={{ backgroundImage: `url(${uberBackground})` }}
+    <div >
+      <h3 className="text-2xl">Home Page</h3>
+      <button
+        onClick={logoutHandler}
+        className="bg-black text-white font-semibold px-4 py-2 rounded mt-8 hover:bg-gray-800"
       >
-        <img className="w-16 ml-7" src={uberLogo} alt="uber-logo" />
-        <div className="bg-white px-4 pt-4 pb-7">
-          <h2 className="text-2xl font-bold">Get Started with Uber</h2>
-          <Link
-            to="/login"
-            className="flex items-center justify-center w-full bg-black text-white font-semibold py-3 mt-6 rounded"
-          >
-            Continue
-          </Link>
-        </div>
-      </div>
+        Logout
+      </button>
     </div>
   );
 };
