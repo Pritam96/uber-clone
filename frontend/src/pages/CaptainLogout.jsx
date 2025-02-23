@@ -1,26 +1,27 @@
 import axios from "axios";
-import { useUserContext } from "../context/UserContext";
+import { useCaptainContext } from "../context/CaptainContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
-const UserLogout = () => {
+const CaptainLogout = () => {
   const navigate = useNavigate();
-  const { setUser, setIsLoading } = useUserContext();
-  const token = localStorage.getItem("token");
+  const { setCaptain, setIsLoading } = useCaptainContext();
 
   useEffect(() => {
     const logoutHandler = async () => {
+      const token = localStorage.getItem("captain-token");
+
       if (!token) {
-        navigate("/user/login");
+        navigate("/captain/login");
         return;
       }
 
       setIsLoading(true);
       try {
         const response = await axios.post(
-          `${baseURL}/users/logout`,
+          `${baseURL}/captains/logout`,
           {},
           {
             headers: {
@@ -30,21 +31,21 @@ const UserLogout = () => {
         );
 
         if (response.status === 200) {
-          setUser(null);
-          localStorage.removeItem("token");
+          setCaptain(null);
+          localStorage.removeItem("captain-token");
         }
       } catch (error) {
         console.error("Logout failed:", error);
       } finally {
         setIsLoading(false);
-        navigate("/user/login");
+        navigate("/captain/login");
       }
     };
 
     logoutHandler();
-  }, [navigate, setUser, setIsLoading]);
+  }, [navigate, setCaptain, setIsLoading]);
 
   return <div>Logging out...</div>;
 };
 
-export default UserLogout;
+export default CaptainLogout;

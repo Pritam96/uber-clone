@@ -106,13 +106,24 @@ export const getCaptainProfile = async (req, res, next) => {
 };
 
 export const logoutCaptain = async (req, res, next) => {
-  const token =
-    req.cookies?.token || req.headers?.authorization?.replace("Bearer ", "");
+  try {
+    const token =
+      req.cookies?.token || req.headers?.authorization?.replace("Bearer ", "");
 
-  await blacklistTokenModel.create({ token });
+    if (!token) {
+      return res.status(400).json({ message: "Token required" });
+    }
 
-  res
-    .clearCookie("token")
-    .status(200)
-    .json({ message: "Captain logged out successfully" });
+    await blacklistTokenModel.updateOne(
+      { token },
+      { $set: { token } },
+      { upsert: true }
+    );
+
+    res.clearCookie("token");
+    res.status(200).json({ message: "Captain logged out successfully" });
+  } catch (error) {
+    console.error("Logout error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };

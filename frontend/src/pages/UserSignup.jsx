@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import uberLogo from "../assets/uber-logo.png";
 import axios from "axios";
-import { useUserContext } from "../context/UserProvider";
+import { useUserContext } from "../context/UserContext";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -40,13 +40,13 @@ const UserSignup = () => {
       if (response.status === 201) {
         setUser(response.data?.user);
         localStorage.setItem("token", response.data?.token);
-        navigate("/home");
+        navigate("/user");
       }
     } catch (error) {
       console.log(error);
     }
 
-    // Clear forData after submit
+    // Clear formData after submit
     setFormData({
       email: "",
       password: "",

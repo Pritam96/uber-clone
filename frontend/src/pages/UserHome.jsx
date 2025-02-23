@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const UserHome = () => {
   const navigate = useNavigate();
+
   const logoutHandler = () => {
     navigate("/user/logout");
   };
+
   return (
-    <div >
+    <div>
       <h3 className="text-2xl">Home Page</h3>
       <button
         onClick={logoutHandler}
@@ -18,4 +20,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default UserHome;

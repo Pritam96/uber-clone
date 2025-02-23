@@ -1,7 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import uberLogo from "../assets/uber-logo.png";
 import rightArrow from "../assets/right-arrow.png";
+import axios from "axios";
+import { useCaptainContext } from "../context/CaptainContext";
+
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const CaptainSignup = () => {
   const [formData, setFormData] = useState({
@@ -11,13 +15,16 @@ const CaptainSignup = () => {
       firstName: "",
       lastName: "",
     },
-    // vehicle: {
-    //   color: "",
-    //   plate: "",
-    //   capacity: 1,
-    //   vehicleType: "",
-    // },
+    vehicle: {
+      color: "",
+      plate: "",
+      capacity: "",
+      vehicleType: "",
+    },
   });
+
+  const navigate = useNavigate();
+  const { setCaptain } = useCaptainContext();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,15 +34,37 @@ const CaptainSignup = () => {
             ...prevFormData,
             fullName: { ...prevFormData.fullName, [name]: value },
           }
+        : name === "color" ||
+          name === "plate" ||
+          name === "capacity" ||
+          name === "vehicleType"
+        ? {
+            ...prevFormData,
+            vehicle: { ...prevFormData.vehicle, [name]: value },
+          }
         : { ...prevFormData, [name]: value }
     );
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
-    // Clear forData after submit
+    try {
+      const response = await axios.post(
+        `${baseURL}/captains/register`,
+        formData
+      );
+
+      if (response.status === 201) {
+        setCaptain(response.data?.captain);
+        localStorage.setItem("captain-token", response.data?.token);
+        navigate("/captain");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    // Clear formData after submit
     setFormData({
       email: "",
       password: "",
@@ -43,14 +72,15 @@ const CaptainSignup = () => {
         firstName: "",
         lastName: "",
       },
-      // vehicle: {
-      //   color: "",
-      //   plate: "",
-      //   capacity: 1,
-      //   vehicleType: "",
-      // },
+      vehicle: {
+        color: "",
+        plate: "",
+        capacity: "",
+        vehicleType: "",
+      },
     });
   };
+
   return (
     <div>
       <div className="w-full h-screen flex flex-col justify-between p-7">
@@ -100,7 +130,7 @@ const CaptainSignup = () => {
               required
             />
 
-            {/* <h3 className="text-base font-medium mb-2">
+            <h3 className="text-base font-medium mb-2">
               Your Vehicle Information
             </h3>
             <div className="mb-6">
@@ -129,7 +159,7 @@ const CaptainSignup = () => {
 
               <div className="w-full flex justify-between gap-4">
                 <input
-                  type="text"
+                  type="number"
                   className="w-1/2 bg-[#eeeeee] rounded px-4 py-2 border text-base placeholder:text-sm"
                   name="capacity"
                   id="capacity"
@@ -138,18 +168,21 @@ const CaptainSignup = () => {
                   value={formData.vehicle.capacity}
                   required
                 />
-                <input
-                  type="text"
-                  className="w-1/2 bg-[#eeeeee] rounded px-4 py-2 border text-base placeholder:text-sm"
+                <select
+                  className="w-1/2 bg-[#eeeeee] rounded px-4 py-2 border text-base"
                   name="vehicleType"
                   id="vehicleType"
-                  placeholder="Vehicle Type"
                   onChange={handleChange}
                   value={formData.vehicle.vehicleType}
                   required
-                />
+                >
+                  <option value="">Vehicle Type</option>
+                  <option value="car">Car</option>
+                  <option value="auto">Auto</option>
+                  <option value="motorcycle">Moto</option>
+                </select>
               </div>
-            </div> */}
+            </div>
 
             <h3 className="text-base font-medium mb-2">Enter Password</h3>
             <input

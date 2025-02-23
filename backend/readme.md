@@ -65,7 +65,7 @@ The request body must be a JSON object containing the following fields:
 - **Validation Error:** If the request body contains invalid data, a `400 Bad Request` response will be returned.
 - **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response will be returned.
 
-## Endpoint: `/users/user/login`
+## Endpoint: `/users/login`
 
 ### Description
 
@@ -272,7 +272,7 @@ This endpoint registers a new captain in the system. It validates input data and
 }
 ```
 
-## Endpoint: `/captains/user/login`
+## Endpoint: `/captains/login`
 
 ### Description
 

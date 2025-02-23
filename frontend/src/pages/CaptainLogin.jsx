@@ -1,20 +1,39 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import uberLogo from "../assets/uber-logo.png";
 import rightArrow from "../assets/right-arrow.png";
+import axios from "axios";
+import { useCaptainContext } from "../context/CaptainContext";
+
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const CaptainLogin = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const handleChange = (e) => {
+
+  const navigate = useNavigate();
+  const { setCaptain } = useCaptainContext();
+
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    try {
+      const response = await axios.post(`${baseURL}/captains/login`, formData);
+
+      if (response.status === 201) {
+        setCaptain(response.data?.captain);
+        localStorage.setItem("captain-token", response.data?.token);
+        navigate("/captain");
+      }
+    } catch (error) {
+      console.log(error);
+    }
 
     // Clear forData after submit
     setFormData({
