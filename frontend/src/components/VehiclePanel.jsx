@@ -1,3 +1,7 @@
+import uberCar from "../assets/uber-car.webp";
+import uberMoto from "../assets/uber-moto.webp";
+import uberAuto from "../assets/uber-auto.webp";
+
 const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
   return (
     <>
@@ -15,7 +19,7 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
         className="w-full flex items-center justify-between p-3 mb-3 border-2 border-gray-300 active:border-gray-900 rounded-xl"
         onClick={() => setConfirmRidePanel(true)}
       >
-        <img src="src/assets/uber-car.webp" alt="uber-car" className="w-20" />
+        <img src={uberCar} alt="uber-car" className="w-20" />
         <div className="w-1/2 ml-2">
           <h4 className="font-medium text-base">
             UberGo{" "}
@@ -37,7 +41,7 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
         className="w-full flex items-center justify-between p-3 mb-3 border-2 border-gray-300 active:border-gray-900 rounded-xl"
         onClick={() => setConfirmRidePanel(true)}
       >
-        <img src="src/assets/uber-moto.webp" alt="uber-moto" className="w-20" />
+        <img src={uberMoto} alt="uber-moto" className="w-20" />
         <div className="w-1/2 ml-2">
           <h4 className="font-medium text-base">
             Moto{" "}
@@ -59,7 +63,7 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
         className="w-full flex items-center justify-between p-3 mb-3 border-2 border-gray-300 active:border-gray-900 rounded-xl"
         onClick={() => setConfirmRidePanel(true)}
       >
-        <img src="src/assets/uber-auto.webp" alt="uber-auto" className="w-20" />
+        <img src={uberAuto} alt="uber-auto" className="w-20" />
         <div className="w-1/2 ml-2">
           <h4 className="font-medium text-base">
             UberAuto{" "}

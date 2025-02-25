@@ -97,32 +97,32 @@ const UserHome = () => {
           <form onSubmit={submitHandler}>
             <div className="relative flex flex-col items-center w-full">
               {/* Line connecting pickup and destination */}
-              <div className="h-[42px] w-0.5 bg-gray-800 absolute top-[46px] left-[23px] z-10"></div>
+              <div className="h-[42px] w-0.5 bg-gray-800 absolute top-[46px] left-[20px] z-10"></div>
 
               {/* Pickup location */}
               <div className="relative w-full mt-3">
-                <i className="ri-record-circle-fill absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-800 text-lg"></i>
+                <i className="ri-record-circle-fill absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-800 text-[10px]"></i>
                 <input
                   type="text"
                   name="pickup"
                   value={formData.pickup}
                   onChange={handleChange}
                   onClick={() => setInputPanel(true)}
-                  className="w-full bg-[#eee] px-12 py-3 text-base rounded-lg"
+                  className="w-full bg-[#eee] px-14 py-3 text-base font-medium rounded-lg"
                   placeholder="Add a pick-up location"
                 />
               </div>
 
               {/* Destination input */}
               <div className="relative w-full mt-3">
-                <i className="ri-square-fill absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-800 text-sm"></i>
+                <i className="ri-square-fill absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-800 text-[10px]"></i>
                 <input
                   type="text"
                   name="destination"
                   value={formData.destination}
                   onChange={handleChange}
                   onClick={() => setInputPanel(true)}
-                  className="w-full bg-[#eee] px-12 py-3 text-base rounded-lg"
+                  className="w-full bg-[#eee] px-14 py-3 text-base font-medium rounded-lg"
                   placeholder="Enter your destination"
                 />
               </div>

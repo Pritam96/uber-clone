@@ -1,11 +1,15 @@
+import UserImage from "../assets/uber-car.webp";
 const WaitingForDriver = ({ setWaitingForDriverPanel }) => {
   return (
     <>
-      <h5 className="p-1 text-center text-gray-300" onClick={() => setWaitingForDriverPanel(false)}>
+      <h5
+        className="p-1 text-center text-gray-300"
+        onClick={() => setWaitingForDriverPanel(false)}
+      >
         <i className="ri-arrow-down-wide-line text-3xl"></i>
       </h5>
       <div className="flex items-center justify-between px-3">
-        <img src="src/assets/uber-car.webp" alt="uber-car" className="h-12" />
+        <img src={UserImage} alt="uber-car" className="h-12" />
         <div className="text-right">
           <h2 className="text-lg font-medium">JOHN</h2>
           <h4 className="text-xl font-bold -mt-1">KA15AK00-0</h4>

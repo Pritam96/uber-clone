@@ -1,3 +1,4 @@
+import uberCar from "../assets/uber-car.webp";
 const ConfirmRide = ({
   setVehiclePanel,
   setConfirmRidePanel,
@@ -18,7 +19,7 @@ const ConfirmRide = ({
         Confirm your ride
       </h3>
       <div className="flex flex-col gap-2 items-center justify-center">
-        <img src="src/assets/uber-car.webp" alt="uber-car" className="h-24" />
+        <img src={uberCar} alt="uber-car" className="h-24" />
         <div className="w-full mt-5">
           <div className="flex items-center gap-5 p-3 border-b-2 border-gray-200">
             <i className="ri-map-pin-range-fill text-lg"></i>
