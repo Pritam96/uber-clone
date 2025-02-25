@@ -1,22 +1,21 @@
 import { Link } from "react-router-dom";
 import uberLogo from "../assets/uber-logo.png";
 import uberMap from "../assets/uber-map.gif";
-import UserImage from "../assets/uber-car.webp";
+import UserImage from "../assets/uber-user.jpg";
 
 const UserRiding = () => {
   return (
     <div className="h-screen relative overflow-hidden">
-      <img
-        className="w-16 absolute left-7 top-7"
-        src={uberLogo}
-        alt="uber-logo"
-      />
-      <Link
-        to="/user"
-        className="fixed h-10 w-10 bg-white flex items-center justify-center rounded-full top-5 right-5 "
-      >
-        <i className="ri-home-8-line text-lg font-medium"></i>
-      </Link>
+      <div className="fixed w-full p-3 flex items-center justify-between">
+        <img className="w-16" src={uberLogo} alt="uber-logo" />
+        <Link
+          to="/user"
+          className="h-10 w-10 bg-white flex items-center justify-center rounded-full"
+        >
+          <i className="ri-home-8-line text-lg font-medium"></i>
+        </Link>
+      </div>
+
       <div className="h-1/2">
         <img src={uberMap} alt="map" className="h-full w-full object-cover" />
       </div>
