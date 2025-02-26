@@ -558,3 +558,145 @@ Provides address suggestions based on partial input.
 
 - **400 Bad Request:** Invalid or missing input.
 - **500 Internal Server Error:** Unexpected server error.
+
+## Endpoint: `/rides/create`
+
+### Description
+
+Creates a new ride request. Validates the input data, calculates the fare based on the pickup and destination locations, and generates an OTP for the ride.
+
+### HTTP Method
+
+`POST`
+
+### Authentication
+
+- Requires a valid user authentication token.
+
+### Request Headers
+
+- `Authorization: Bearer <token>` - The authentication token obtained during login.
+- `Content-Type: application/json`
+
+### Request Body
+
+| Field       | Type   | Required | Description                                                       | Example                  |
+| ----------- | ------ | -------- | ----------------------------------------------------------------- | ------------------------ |
+| pickup      | string | Yes      | The pickup location. Must be at least 3 characters long.          | `"Park Street, Kolkata"` |
+| destination | string | Yes      | The destination location. Must be at least 3 characters long.     | `"Salt Lake, Kolkata"`   |
+| vehicleType | string | Yes      | The type of vehicle. Must be one of: `auto`, `car`, `motorcycle`. | `"car"`                  |
+
+#### Example Request Body
+
+```json
+{
+  "pickup": "Park Street, Kolkata",
+  "destination": "Salt Lake, Kolkata",
+  "vehicleType": "car"
+}
+```
+
+### Response
+
+#### Success Response
+
+- **Status Code:** `201 Created`
+- **Response Body:** A JSON object containing the ride details.
+
+##### Example Success Response
+
+```json
+{
+  "id": "ride-id",
+  "user": "user-id",
+  "pickup": "Park Street, Kolkata",
+  "destination": "Salt Lake, Kolkata",
+  "fare": 120.5,
+  "otp": "123456",
+  "status": "pending"
+}
+```
+
+#### Error Responses
+
+- **400 Bad Request:** Invalid or missing request body.
+- **401 Unauthorized:** Invalid or missing authentication token.
+- **500 Internal Server Error:** Unexpected server error.
+
+---
+
+### Validation Rules
+
+The following validation rules are applied to the request body:
+
+1. **pickup:**
+   - Must be a string.
+   - Must be at least 3 characters long.
+   - Error message: `"Invalid pickup location"`.
+2. **destination:**
+   - Must be a string.
+   - Must be at least 3 characters long.
+   - Error message: `"Invalid destination location"`.
+3. **vehicleType:**
+   - Must be a string.
+   - Must be one of: `auto`, `car`, `motorcycle`.
+   - Error message: `"Invalid vehicle type"`.
+
+---
+
+### Fare Calculation
+
+The fare is calculated based on the following formula:
+
+```
+Fare = Base Fare + (Distance × Per Km Rate) + (Time × Per Minute Rate)
+```
+
+#### Base Fare
+
+- `auto`: 30
+- `car`: 50
+- `motorcycle`: 20
+
+#### Per Km Rate
+
+- `auto`: 10
+- `car`: 15
+- `motorcycle`: 8
+
+#### Per Minute Rate
+
+- `auto`: 2
+- `car`: 3
+- `motorcycle`: 1.5
+
+---
+
+### OTP Generation
+
+A 6-digit OTP is generated for each ride using a cryptographically secure random number generator.
+
+---
+
+### Example Use Case
+
+1. **Request:**
+   ```json
+   {
+     "pickup": "Park Street, Kolkata",
+     "destination": "Salt Lake, Kolkata",
+     "vehicleType": "car"
+   }
+   ```
+2. **Response:**
+   ```json
+   {
+     "id": "ride-id",
+     "user": "user-id",
+     "pickup": "Park Street, Kolkata",
+     "destination": "Salt Lake, Kolkata",
+     "fare": 120.5,
+     "otp": "123456",
+     "status": "pending"
+   }
+   ```

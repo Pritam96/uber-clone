@@ -8,6 +8,7 @@ import connectDB from "./db/db.js";
 import userRoutes from "./routes/user.routes.js";
 import captainRoutes from "./routes/captain.routes.js";
 import mapsRoutes from "./routes/maps.routes.js";
+import rideRoutes from "./routes/ride.routes.js";
 
 dotenv.config();
 connectDB();
@@ -24,6 +25,7 @@ app.get("/", (req, res) => res.send("Working"));
 app.use("/users", userRoutes);
 app.use("/captains", captainRoutes);
 app.use("/maps", mapsRoutes);
+app.use("/rides", rideRoutes);
 
 const server = http.createServer(app);
 server.listen(PORT, () => console.log(`Server is running on PORT: ${PORT}`));
