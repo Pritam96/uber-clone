@@ -4,7 +4,7 @@
 
 ### Description
 
-This endpoint registers a new user in the system. It validates input data and creates a new user record in the database.
+Registers a new user in the system. Validates input data and creates a new user record in the database.
 
 ### HTTP Method
 
@@ -16,13 +16,11 @@ This endpoint registers a new user in the system. It validates input data and cr
 
 ### Request Body
 
-The request body must be a JSON object containing the following fields:
-
-- `email` (string) - The user's email address. Must be in a valid email format.
-- `fullName` (object) - Contains:
-  - `firstName` (string) - The user's first name. Must be at least 3 characters long.
-  - `lastName` (string) - The user's last name. Optional but must be at least 3 characters long if provided.
-- `password` (string) - The user's password. Must be at least 6 characters long.
+| Field    | Type   | Description                                                | Example                                      |
+| -------- | ------ | ---------------------------------------------------------- | -------------------------------------------- |
+| email    | string | The user's email address. Must be in a valid email format. | `"user@example.com"`                         |
+| fullName | object | Contains the user's first and last names.                  | `{ "firstName": "John", "lastName": "Doe" }` |
+| password | string | The user's password. Must be at least 6 characters long.   | `"securePassword123"`                        |
 
 #### Example Request Body
 
@@ -62,14 +60,16 @@ The request body must be a JSON object containing the following fields:
 
 #### Error Responses
 
-- **Validation Error:** If the request body contains invalid data, a `400 Bad Request` response will be returned.
-- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response will be returned.
+- **400 Bad Request:** Invalid or missing request body.
+- **500 Internal Server Error:** Unexpected server error.
+
+---
 
 ## Endpoint: `/users/login`
 
 ### Description
 
-This endpoint authenticates a user in the system. It validates the input data and checks the user's credentials against the stored records.
+Authenticates a user in the system. Validates the input data and checks the user's credentials against stored records.
 
 ### HTTP Method
 
@@ -81,10 +81,10 @@ This endpoint authenticates a user in the system. It validates the input data an
 
 ### Request Body
 
-The request body must be a JSON object containing the following fields:
-
-- `email` (string) - The user's email address. Must be in a valid email format.
-- `password` (string) - The user's password. Must be at least 6 characters long.
+| Field    | Type   | Description                                                | Example               |
+| -------- | ------ | ---------------------------------------------------------- | --------------------- |
+| email    | string | The user's email address. Must be in a valid email format. | `"user@example.com"`  |
+| password | string | The user's password. Must be at least 6 characters long.   | `"securePassword123"` |
 
 #### Example Request Body
 
@@ -120,14 +120,16 @@ The request body must be a JSON object containing the following fields:
 
 #### Error Responses
 
-- **Unauthorized Error:** If the email or password is invalid, a `401 Unauthorized` response will be returned.
-- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response will be returned.
+- **401 Unauthorized:** Invalid email or password.
+- **500 Internal Server Error:** Unexpected server error.
+
+---
 
 ## Endpoint: `/users/profile`
 
 ### Description
 
-This endpoint retrieves the authenticated user's profile information.
+Retrieves the authenticated user's profile information.
 
 ### HTTP Method
 
@@ -159,14 +161,16 @@ This endpoint retrieves the authenticated user's profile information.
 
 #### Error Responses
 
-- **Unauthorized Error:** If the authentication token is invalid or missing, a `401 Unauthorized` response will be returned.
-- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response will be returned.
+- **401 Unauthorized:** Invalid or missing authentication token.
+- **500 Internal Server Error:** Unexpected server error.
+
+---
 
 ## Endpoint: `/users/logout`
 
 ### Description
 
-This endpoint logs out the authenticated user by invalidating their authentication token.
+Logs out the authenticated user by invalidating their authentication token.
 
 ### HTTP Method
 
@@ -193,14 +197,16 @@ This endpoint logs out the authenticated user by invalidating their authenticati
 
 #### Error Responses
 
-- **Unauthorized Error:** If the authentication token is invalid or missing, a `401 Unauthorized` response will be returned.
-- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response
+- **401 Unauthorized:** Invalid or missing authentication token.
+- **500 Internal Server Error:** Unexpected server error.
+
+---
 
 ## Endpoint: `/captains/register`
 
 ### Description
 
-This endpoint registers a new captain in the system. It validates input data and creates a new captain record in the database.
+Registers a new captain in the system. Validates input data and creates a new captain record in the database.
 
 ### HTTP Method
 
@@ -219,19 +225,7 @@ This endpoint registers a new captain in the system. It validates input data and
 | password | string | The captain's password. Must be at least 6 characters long.   | `"securePassword123"`                                                        |
 | vehicle  | object | Contains the vehicle's details.                               | `{ "color": "Red", "plate": "ABC123", "capacity": 4, "vehicleType": "car" }` |
 
-### Response
-
-#### Success Response
-
-- **Status Code:** `201 Created`
-- **Response Body:** A JSON object containing the authentication token and captain information.
-
-#### Error Responses
-
-- **400 Bad Request:** If the request body is invalid or missing required fields.
-- **500 Internal Server Error:** If an unexpected error occurs.
-
-### Example Request Body
+#### Example Request Body
 
 ```json
 {
@@ -250,7 +244,14 @@ This endpoint registers a new captain in the system. It validates input data and
 }
 ```
 
-### Example Success Response
+### Response
+
+#### Success Response
+
+- **Status Code:** `201 Created`
+- **Response Body:** A JSON object containing the authentication token and captain information.
+
+##### Example Success Response
 
 ```json
 {
@@ -272,11 +273,18 @@ This endpoint registers a new captain in the system. It validates input data and
 }
 ```
 
+#### Error Responses
+
+- **400 Bad Request:** Invalid or missing request body.
+- **500 Internal Server Error:** Unexpected server error.
+
+---
+
 ## Endpoint: `/captains/login`
 
 ### Description
 
-This endpoint authenticates a captain in the system. It validates the input data and checks the captain's credentials against the stored records.
+Authenticates a captain in the system. Validates the input data and checks the captain's credentials against stored records.
 
 ### HTTP Method
 
@@ -293,19 +301,7 @@ This endpoint authenticates a captain in the system. It validates the input data
 | email    | string | The captain's email address. Must be in a valid email format. | `"captain@example.com"` |
 | password | string | The captain's password. Must be at least 6 characters long.   | `"securePassword123"`   |
 
-### Response
-
-#### Success Response
-
-- **Status Code:** `201 Created`
-- **Response Body:** A JSON object containing the authentication token and captain information.
-
-#### Error Responses
-
-- **401 Unauthorized:** If the captain's credentials are invalid.
-- **500 Internal Server Error:** If an unexpected error occurs.
-
-### Example Request Body
+#### Example Request Body
 
 ```json
 {
@@ -314,7 +310,14 @@ This endpoint authenticates a captain in the system. It validates the input data
 }
 ```
 
-### Example Success Response
+### Response
+
+#### Success Response
+
+- **Status Code:** `201 Created`
+- **Response Body:** A JSON object containing the authentication token and captain information.
+
+##### Example Success Response
 
 ```json
 {
@@ -336,11 +339,18 @@ This endpoint authenticates a captain in the system. It validates the input data
 }
 ```
 
+#### Error Responses
+
+- **401 Unauthorized:** Invalid email or password.
+- **500 Internal Server Error:** Unexpected server error.
+
+---
+
 ## Endpoint: `/captains/profile`
 
 ### Description
 
-This endpoint retrieves the authenticated captain's profile information.
+Retrieves the authenticated captain's profile information.
 
 ### HTTP Method
 
@@ -378,14 +388,16 @@ This endpoint retrieves the authenticated captain's profile information.
 
 #### Error Responses
 
-- **Unauthorized Error:** If the authentication token is invalid or missing, a `401 Unauthorized` response will be returned.
-- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response will be returned.
+- **401 Unauthorized:** Invalid or missing authentication token.
+- **500 Internal Server Error:** Unexpected server error.
+
+---
 
 ## Endpoint: `/captains/logout`
 
 ### Description
 
-This endpoint logs out the authenticated captain by invalidating their authentication token.
+Logs out the authenticated captain by invalidating their authentication token.
 
 ### HTTP Method
 
@@ -412,5 +424,137 @@ This endpoint logs out the authenticated captain by invalidating their authentic
 
 #### Error Responses
 
-- **Unauthorized Error:** If the authentication token is invalid or missing, a `401 Unauthorized` response will be returned.
-- **Internal Server Error:** If an unexpected error occurs, a `500 Internal Server Error` response will be returned.
+- **401 Unauthorized:** Invalid or missing authentication token.
+- **500 Internal Server Error:** Unexpected server error.
+
+---
+
+## Endpoint: `/maps/coordinates`
+
+### Description
+
+Fetches latitude and longitude coordinates for a given address.
+
+### HTTP Method
+
+`GET`
+
+### Authentication
+
+- Requires a valid user authentication.
+
+### Query Parameters
+
+| Parameter | Type   | Required | Description                          |
+| --------- | ------ | -------- | ------------------------------------ |
+| address   | string | Yes      | Address to retrieve coordinates for. |
+
+### Response
+
+#### Success Response
+
+- **Status Code:** `200 OK`
+- **Response Body:** A JSON object containing latitude and longitude.
+
+##### Example Success Response
+
+```json
+{
+  "lat": 22.5726,
+  "lng": 88.3639
+}
+```
+
+#### Error Responses
+
+- **400 Bad Request:** Invalid or missing address.
+- **404 Not Found:** Address not found.
+- **500 Internal Server Error:** Unexpected server error.
+
+---
+
+## Endpoint: `/maps/distance-time`
+
+### Description
+
+Calculates the distance and estimated travel time between two locations.
+
+### HTTP Method
+
+`GET`
+
+### Authentication
+
+- Requires a valid user authentication.
+
+### Query Parameters
+
+| Parameter   | Type   | Required | Description           |
+| ----------- | ------ | -------- | --------------------- |
+| origin      | string | Yes      | Starting location.    |
+| destination | string | Yes      | Destination location. |
+
+### Response
+
+#### Success Response
+
+- **Status Code:** `200 OK`
+- **Response Body:** A JSON object containing distance and duration.
+
+##### Example Success Response
+
+```json
+{
+  "distance": "10 km",
+  "duration": "15 mins"
+}
+```
+
+#### Error Responses
+
+- **400 Bad Request:** Invalid or missing parameters.
+- **500 Internal Server Error:** Unexpected server error.
+
+---
+
+## Endpoint: `/maps/suggestions`
+
+### Description
+
+Provides address suggestions based on partial input.
+
+### HTTP Method
+
+`GET`
+
+### Authentication
+
+- Requires a valid user authentication.
+
+### Query Parameters
+
+| Parameter | Type   | Required | Description                      |
+| --------- | ------ | -------- | -------------------------------- |
+| input     | string | Yes      | Partial address for suggestions. |
+
+### Response
+
+#### Success Response
+
+- **Status Code:** `200 OK`
+- **Response Body:** A JSON array of address suggestions.
+
+##### Example Success Response
+
+```json
+[
+  "Park Street, Kolkata, India",
+  "Park Circus, Kolkata, India",
+  "Park Lane, London, UK"
+]
+```
+
+#### Error Responses
+
+- **400 Bad Request:** Invalid or missing input.
+- **500 Internal Server Error:** Unexpected server error.

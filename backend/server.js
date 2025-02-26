@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./db/db.js";
 import userRoutes from "./routes/user.routes.js";
 import captainRoutes from "./routes/captain.routes.js";
+import mapsRoutes from "./routes/maps.routes.js";
 
 dotenv.config();
 connectDB();
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.get("/", (req, res) => res.send("Working"));
 app.use("/users", userRoutes);
 app.use("/captains", captainRoutes);
+app.use("/maps", mapsRoutes);
 
 const server = http.createServer(app);
 server.listen(PORT, () => console.log(`Server is running on PORT: ${PORT}`));
