@@ -623,8 +623,6 @@ Creates a new ride request. Validates the input data, calculates the fare based 
 - **401 Unauthorized:** Invalid or missing authentication token.
 - **500 Internal Server Error:** Unexpected server error.
 
----
-
 ### Validation Rules
 
 The following validation rules are applied to the request body:
@@ -641,8 +639,6 @@ The following validation rules are applied to the request body:
    - Must be a string.
    - Must be one of: `auto`, `car`, `motorcycle`.
    - Error message: `"Invalid vehicle type"`.
-
----
 
 ### Fare Calculation
 
@@ -670,13 +666,9 @@ Fare = Base Fare + (Distance × Per Km Rate) + (Time × Per Minute Rate)
 - `car`: 3
 - `motorcycle`: 1.5
 
----
-
 ### OTP Generation
 
 A 6-digit OTP is generated for each ride using a cryptographically secure random number generator.
-
----
 
 ### Example Use Case
 
@@ -698,5 +690,113 @@ A 6-digit OTP is generated for each ride using a cryptographically secure random
      "fare": 120.5,
      "otp": "123456",
      "status": "pending"
+   }
+   ```
+
+## Endpoint: `/rides/fare`
+
+### Description
+
+Calculates the fare for a ride based on the pickup and destination locations. The fare is calculated for all available vehicle types (`auto`, `car`, `motorcycle`).
+
+### HTTP Method
+
+`GET`
+
+### Authentication
+
+- Requires a valid user authentication token.
+
+### Request Headers
+
+- `Authorization: Bearer <token>` - The authentication token obtained during login.
+
+### Query Parameters
+
+| Parameter     | Type   | Required | Description                                                   | Example                  |
+| ------------- | ------ | -------- | ------------------------------------------------------------- | ------------------------ |
+| `pickup`      | string | Yes      | The pickup location. Must be at least 3 characters long.      | `"Park Street, Kolkata"` |
+| `destination` | string | Yes      | The destination location. Must be at least 3 characters long. | `"Salt Lake, Kolkata"`   |
+
+#### Example Request URL
+
+```
+GET /rides/fare?pickup=Park%20Street%2C%20Kolkata&destination=Salt%20Lake%2C%20Kolkata
+```
+
+### Response
+
+#### Success Response
+
+- **Status Code:** `200 OK`
+- **Response Body:** A JSON object containing the fare for each vehicle type.
+
+##### Example Success Response
+
+```json
+{
+  "auto": 120.5,
+  "car": 180.75,
+  "motorcycle": 90.25
+}
+```
+
+#### Error Responses
+
+- **400 Bad Request:** Invalid or missing query parameters.
+- **401 Unauthorized:** Invalid or missing authentication token.
+- **500 Internal Server Error:** Unexpected server error.
+
+### Validation Rules
+
+The following validation rules are applied to the query parameters:
+
+1. **pickup:**
+   - Must be a string.
+   - Must be at least 3 characters long.
+   - Error message: `"Invalid pickup location"`.
+2. **destination:**
+   - Must be a string.
+   - Must be at least 3 characters long.
+   - Error message: `"Invalid destination location"`.
+
+### Fare Calculation
+
+The fare is calculated based on the following formula:
+
+```
+Fare = Base Fare + (Distance × Per Km Rate) + (Time × Per Minute Rate)
+```
+
+#### Base Fare
+
+- `auto`: 30
+- `car`: 50
+- `motorcycle`: 20
+
+#### Per Km Rate
+
+- `auto`: 10
+- `car`: 15
+- `motorcycle`: 8
+
+#### Per Minute Rate
+
+- `auto`: 2
+- `car`: 3
+- `motorcycle`: 1.5
+
+### Example Use Case
+
+1. **Request:**
+   ```
+   GET /rides/fare?pickup=Park%20Street%2C%20Kolkata&destination=Salt%20Lake%2C%20Kolkata
+   ```
+2. **Response:**
+   ```json
+   {
+     "auto": 120.5,
+     "car": 180.75,
+     "motorcycle": 90.25
    }
    ```

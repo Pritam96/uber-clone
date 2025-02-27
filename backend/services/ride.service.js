@@ -28,7 +28,7 @@ const calculateFare = (vehicleType, distance, time) => {
   );
 };
 
-const getFare = async (pickup, destination) => {
+export const getFareService = async (pickup, destination) => {
   if (!pickup || !destination) {
     throw new Error("Pickup and destination are required");
   }
@@ -36,16 +36,18 @@ const getFare = async (pickup, destination) => {
   try {
     const distanceTime = await getDistanceTimeService(pickup, destination);
 
-    console.log(distanceTime);
-
     // Convert distance (meters to km) and duration (seconds to minutes)
     const distanceInKm = distanceTime.distance.value / 1000;
     const durationInMinutes = distanceTime.duration.value / 60;
 
     const fare = {
-      auto: calculateFare("auto", distanceInKm, durationInMinutes),
-      car: calculateFare("car", distanceInKm, durationInMinutes),
-      motorcycle: calculateFare("motorcycle", distanceInKm, durationInMinutes),
+      auto: calculateFare("auto", distanceInKm, durationInMinutes).toFixed(2),
+      car: calculateFare("car", distanceInKm, durationInMinutes).toFixed(2),
+      motorcycle: calculateFare(
+        "motorcycle",
+        distanceInKm,
+        durationInMinutes
+      ).toFixed(2),
     };
 
     return fare;
@@ -70,9 +72,7 @@ export const createRideService = async (
   }
 
   try {
-    const fareData = await getFare(pickup, destination);
-
-    console.log(fareData);
+    const fareData = await getFareService(pickup, destination);
 
     const ride = await rideModel.create({
       user: userId,

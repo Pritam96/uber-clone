@@ -25,7 +25,7 @@ const UserLogin = () => {
     try {
       const response = await axios.post(`${baseURL}/users/login`, formData);
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         setUser(response.data?.user);
         localStorage.setItem("token", response.data?.token);
         navigate("/user");

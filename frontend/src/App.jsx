@@ -53,25 +53,25 @@ const App = () => {
       <Route
         path="/captain"
         element={
+          <CaptainProtectRoute>
             <CaptainHome />
-          // <CaptainProtectRoute>
-          // </CaptainProtectRoute>
+          </CaptainProtectRoute>
         }
       />
       <Route
         path="/captain/logout"
         element={
+          <CaptainProtectRoute>
             <CaptainLogout />
-          // <CaptainProtectRoute>
-          // </CaptainProtectRoute>
+          </CaptainProtectRoute>
         }
       />
       <Route
         path="/captain/riding"
         element={
+          <CaptainProtectRoute>
             <CaptainRiding />
-          // <CaptainProtectRoute>
-          // </CaptainProtectRoute>
+          </CaptainProtectRoute>
         }
       />
     </Routes>

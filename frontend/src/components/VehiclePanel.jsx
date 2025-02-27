@@ -2,13 +2,21 @@ import uberCar from "../assets/uber-car.webp";
 import uberMoto from "../assets/uber-moto.webp";
 import uberAuto from "../assets/uber-auto.webp";
 
-const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
+const VehiclePanel = ({
+  fareData,
+  setVehicleType,
+  setInputPanel,
+  setVehiclePanel,
+  setConfirmRidePanel,
+}) => {
   return (
     <>
       <h5
         className="p-1 text-center text-gray-300"
         onClick={() => {
+          setVehicleType("");
           setVehiclePanel(false);
+          setInputPanel(true);
         }}
       >
         <i className="ri-arrow-down-wide-line text-3xl"></i>
@@ -17,7 +25,11 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
 
       <div
         className="w-full flex items-center justify-between p-3 mb-3 border-2 border-gray-300 active:border-gray-900 rounded-xl"
-        onClick={() => setConfirmRidePanel(true)}
+        onClick={() => {
+          setVehicleType("car");
+          setVehiclePanel(false);
+          setConfirmRidePanel(true);
+        }}
       >
         <img src={uberCar} alt="uber-car" className="w-20" />
         <div className="w-1/2 ml-2">
@@ -33,13 +45,17 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
           </p>
         </div>
         <h2 className="text-lg font-semibold">
-          <span>&#x20B9;</span>193.20
+          <span>&#x20B9;{fareData.car}</span>
         </h2>
       </div>
 
       <div
         className="w-full flex items-center justify-between p-3 mb-3 border-2 border-gray-300 active:border-gray-900 rounded-xl"
-        onClick={() => setConfirmRidePanel(true)}
+        onClick={() => {
+          setVehicleType("moto");
+          setVehiclePanel(false);
+          setConfirmRidePanel(true);
+        }}
       >
         <img src={uberMoto} alt="uber-moto" className="w-20" />
         <div className="w-1/2 ml-2">
@@ -55,13 +71,17 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
           </p>
         </div>
         <h2 className="text-lg font-semibold">
-          <span>&#x20B9;</span>65.17
+          <span>&#x20B9;{fareData.moto}</span>
         </h2>
       </div>
 
       <div
         className="w-full flex items-center justify-between p-3 mb-3 border-2 border-gray-300 active:border-gray-900 rounded-xl"
-        onClick={() => setConfirmRidePanel(true)}
+        onClick={() => {
+          setVehicleType("auto");
+          setVehiclePanel(false);
+          setConfirmRidePanel(true);
+        }}
       >
         <img src={uberAuto} alt="uber-auto" className="w-20" />
         <div className="w-1/2 ml-2">
@@ -77,7 +97,7 @@ const VehiclePanel = ({ setVehiclePanel, setConfirmRidePanel }) => {
           </p>
         </div>
         <h2 className="text-lg font-semibold">
-          <span>&#x20B9;</span>120.20
+          <span>&#x20B9;{fareData.auto}</span>
         </h2>
       </div>
     </>
